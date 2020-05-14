@@ -1,0 +1,44 @@
+﻿@model SportsStore.WebUI.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "Sports Store: Your Cart";
+}
+<style>
+    #cartTable td {
+        vertical-align: middle;
+    }
+</style>
+
+<h2>Your cart</h2>
+<table id="cartTable" class="table">
+    <thead>
+        <tr>
+            <th class="text-center">Quantity</th>
+            <th>Item</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: cartModel.cart">
+        <tr>
+            <td class="text-center" data-bind="text: Quantity"></td>
+            <td class="text-left" data-bind="text: Product.Name"></td>
+            <td class="text-right" data-bind="text: formatCurrency(Product.Price)"></td>
+            <td class="text-right" data-bind="text: formatCurrency(Quantity * Product.Price)"></td>
+            <td>
+                <input type="button" value="Remove" class="btn btn-sm btn-warning" data-bind="click: removeLine" />
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right" data-bind="text: formatCurrency(TotalSum())"></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
+    @Html.ActionLink("Checkout now", "Checkout", null, new { @class = "btn btn-primary" })
+</div>
+
